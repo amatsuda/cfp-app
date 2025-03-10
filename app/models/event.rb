@@ -1,19 +1,19 @@
 class Event < ApplicationRecord
-  has_many :teammates, dependent: :destroy
+  has_many :teammates, dependent: :restrict_with_exception
   has_many :staff, through: :teammates, source: :user
-  has_many :proposals, dependent: :destroy
-  has_many :speakers
-  has_many :rooms, dependent: :destroy
-  has_many :tracks, dependent: :destroy
-  has_many :time_slots, dependent: :destroy
-  has_many :program_sessions, dependent: :destroy
-  has_many :session_formats, dependent: :destroy
+  has_many :proposals, dependent: :restrict_with_exception
+  has_many :speakers, dependent: :restrict_with_exception
+  has_many :rooms, dependent: :restrict_with_exception
+  has_many :tracks, dependent: :restrict_with_exception
+  has_many :time_slots, dependent: :restrict_with_exception
+  has_many :program_sessions, dependent: :restrict_with_exception
+  has_many :session_formats, dependent: :restrict_with_exception
   has_many :taggings, through: :proposals
   has_many :ratings, through: :proposals
-  has_many :sponsors
-  has_one :website
+  has_many :sponsors, dependent: :restrict_with_exception
+  has_one :website, dependent: :restrict_with_exception
 
-  has_many :public_session_formats, ->{ where(public: true) }, class_name: 'SessionFormat'
+  has_many :public_session_formats, ->{ where(public: true) }, class_name: 'SessionFormat', dependent: :restrict_with_exception
 
   accepts_nested_attributes_for :proposals
 

@@ -1,8 +1,8 @@
 class SessionFormat < ApplicationRecord
   belongs_to :event
-  has_many :proposals
+  has_many :proposals, dependent: :restrict_with_exception
 
-  has_one :session_format_config
+  has_one :session_format_config, dependent: :restrict_with_exception
 
   validates_presence_of :event
   validates :description, length: { maximum: 250 }

@@ -7,16 +7,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :confirmable, #:validatable,
          :omniauthable, omniauth_providers: [:twitter, :github, :developer]
 
-  has_many :invitations,  dependent: :destroy
+  has_many :invitations,  dependent: :restrict_with_exception
   has_many :teammates, dependent: :destroy
-  has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate'
+  has_many :reviewer_teammates, -> { where(role: ['reviewer', 'program team', 'organizer']) }, class_name: 'Teammate', dependent: :restrict_with_exception
   has_many :reviewer_events, through: :reviewer_teammates, source: :event
-  has_many :organizer_teammates, -> { where(role: 'organizer') }, class_name: 'Teammate'
+  has_many :organizer_teammates, -> { where(role: 'organizer') }, class_name: 'Teammate', dependent: :restrict_with_exception
   has_many :organizer_events, through: :organizer_teammates, source: :event
-  has_many :speakers,      dependent: :destroy
-  has_many :ratings,       dependent: :destroy
-  has_many :comments,      dependent: :destroy
-  has_many :notifications, dependent: :destroy
+  has_many :speakers,      dependent: :restrict_with_exception
+  has_many :ratings,       dependent: :restrict_with_exception
+  has_many :comments,      dependent: :restrict_with_exception
+  has_many :notifications, dependent: :restrict_with_exception
   has_many :proposals, through: :speakers, source: :proposal
   has_many :program_sessions, through: :speakers, source: :program_session
 

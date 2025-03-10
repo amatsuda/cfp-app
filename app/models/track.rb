@@ -2,8 +2,8 @@ class Track < ApplicationRecord
   NO_TRACK = 'General'
 
   belongs_to :event
-  has_many :program_sessions
-  has_many :proposals
+  has_many :program_sessions, dependent: :restrict_with_exception
+  has_many :proposals, dependent: :restrict_with_exception
 
   validates :name, uniqueness: {scope: :event}, presence: true
   validates :description, length: {maximum: 250}

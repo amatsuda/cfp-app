@@ -10,12 +10,12 @@ class Proposal < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :speakers, -> { order created_at: :asc }, dependent: :destroy
   has_many :taggings, dependent: :destroy
-  has_many :proposal_taggings, -> { proposal }, class_name: 'Tagging'
-  has_many :review_taggings, -> { review }, class_name: 'Tagging'
+  has_many :proposal_taggings, -> { proposal }, class_name: 'Tagging', dependent: :destroy
+  has_many :review_taggings, -> { review }, class_name: 'Tagging', dependent: :destroy
   has_many :invitations, dependent: :destroy
 
   belongs_to :event
-  has_one :program_session
+  has_one :program_session, dependent: :restrict_with_exception
   belongs_to :session_format
   belongs_to :track, optional: true
 

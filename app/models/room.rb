@@ -1,6 +1,6 @@
 class Room < ApplicationRecord
   belongs_to :event
-  has_many :time_slots
+  has_many :time_slots, dependent: :restrict_with_exception
 
   validates :name, uniqueness: {scope: :event_id}, presence: true
   scope :by_grid_position, -> {where.not(grid_position: nil).order(:grid_position)}

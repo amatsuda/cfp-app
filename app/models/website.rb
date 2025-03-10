@@ -5,13 +5,13 @@ class Website < ApplicationRecord
   has_many :time_slots, through: :event
   has_many :sponsors, through: :event
   has_many :program_sessions, through: :event
-  has_many :pages, dependent: :destroy
-  has_many :fonts, class_name: 'Website::Font', dependent: :destroy
-  has_many :contents, class_name: 'Website::Content', dependent: :destroy
-  has_one :meta_data, class_name: 'Website::MetaData', dependent: :destroy
+  has_many :pages, dependent: :restrict_with_exception
+  has_many :fonts, class_name: 'Website::Font', dependent: :restrict_with_exception
+  has_many :contents, class_name: 'Website::Content', dependent: :restrict_with_exception
+  has_one :meta_data, class_name: 'Website::MetaData', dependent: :restrict_with_exception
 
   has_many :session_formats, through: :event
-  has_many :session_format_configs
+  has_many :session_format_configs, dependent: :restrict_with_exception
 
   accepts_nested_attributes_for :fonts,
     reject_if: ->(font) { font['name'].blank? && font['file'].blank? },
